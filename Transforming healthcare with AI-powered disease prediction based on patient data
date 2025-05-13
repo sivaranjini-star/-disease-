@@ -1,0 +1,42 @@
+def diagnose_disease(symptoms):
+    # Define a dictionary of diseases and their associated symptoms
+    disease_symptoms = {
+        "Common Cold": ["cough", "sore throat", "runny nose", "sneezing"],
+        "Flu": ["fever", "chills", "muscle aches", "fatigue", "cough"],
+        "COVID-19": ["fever", "cough", "shortness of breath", "loss of taste", "loss of smell"],
+        "Allergy": ["sneezing", "itchy eyes", "runny nose", "rash"],
+        "Strep Throat": ["sore throat", "fever", "swollen lymph nodes", "headache"]
+    }
+
+    # Initialize a dictionary to count matching symptoms for each disease
+    disease_match_count = {disease: 0 for disease in disease_symptoms}
+
+    # Count the number of matching symptoms for each disease
+    for disease, symptoms_list in disease_symptoms.items():
+        for symptom in symptoms:
+            if symptom.lower() in symptoms_list:
+                disease_match_count[disease] += 1
+
+    # Find the disease(s) with the highest match count
+    max_matches = max(disease_match_count.values())
+    possible_diseases = [disease for disease, count in disease_match_count.items() if count == max_matches and count > 0]
+
+    return possible_diseases
+
+def main():
+    print("Welcome to the Disease Diagnosis Tool!")
+    print("Please enter your symptoms separated by commas (e.g., fever, cough, headache):")
+    user_input = input()
+    symptoms = [symptom.strip().lower() for symptom in user_input.split(",")]
+
+    possible_diseases = diagnose_disease(symptoms)
+
+    if possible_diseases:
+        print("\nBased on your symptoms, you might have:")
+        for disease in possible_diseases:
+            print(f"- {disease}")
+    else:
+        print("\nNo matching diseases found. Please consult a healthcare professional for an accurate diagnosis.")
+
+if __name__ == "__main__":
+    main()
